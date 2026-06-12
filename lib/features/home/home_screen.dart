@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import '../../core/constants/app_colors.dart';
 import '../../providers/app_provider.dart';
 import '../games/game_selection_screen.dart';
+import '../games/flashcard/flashcard_game_screen.dart';
+import '../games/quiz/quiz_game_screen.dart';
+import '../games/matching/matching_game_screen.dart';
+import '../games/listening/listening_game_screen.dart';
 import '../learning_path/learning_path_screen.dart';
 import '../leaderboard/leaderboard_screen.dart';
 import '../parent_zone/parent_zone_screen.dart';
@@ -377,30 +381,39 @@ class _HomeTab extends StatelessWidget {
   }
 
   Widget _buildGamesGrid(BuildContext context, AppProvider appProvider) {
+    // Mỗi game có màu riêng và route trực tiếp vào màn hình game tương ứng
     final games = [
       {
         'title': 'Flashcard',
-        'desc': 'Học từ vựng trực quan',
         'icon': Icons.style_rounded,
-        'color': AppColors.primary,
+        'cardBg': const Color(0xFFEADDFF),
+        'iconColor': const Color(0xFF6B38D4),
+        'titleColor': const Color(0xFF21005D),
+        'type': 'flashcard',
       },
       {
         'title': 'Trắc nghiệm',
-        'desc': 'Phản xạ nhanh 4 đáp án',
         'icon': Icons.quiz_rounded,
-        'color': AppColors.secondary,
+        'cardBg': const Color(0xFFB3EFDA),
+        'iconColor': const Color(0xFF006C49),
+        'titleColor': const Color(0xFF002117),
+        'type': 'quiz',
       },
       {
         'title': 'Ghép hình',
-        'desc': 'Nối từ tiếng Anh đúng nghĩa',
         'icon': Icons.extension_rounded,
-        'color': AppColors.tertiary,
+        'cardBg': const Color(0xFFFFDEBB),
+        'iconColor': const Color(0xFF7D4E00),
+        'titleColor': const Color(0xFF281900),
+        'type': 'matching',
       },
       {
         'title': 'Nghe & Chọn',
-        'desc': 'Luyện phát âm chuẩn xác',
         'icon': Icons.headphones_rounded,
-        'color': AppColors.primaryContainer,
+        'cardBg': const Color(0xFFD3E4FF),
+        'iconColor': const Color(0xFF2B5FAB),
+        'titleColor': const Color(0xFF001C40),
+        'type': 'listening',
       },
     ];
 
@@ -411,7 +424,7 @@ class _HomeTab extends StatelessWidget {
         crossAxisCount: 2,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
-        childAspectRatio: 1.2,
+        childAspectRatio: 1.0,
       ),
       itemCount: games.length,
       itemBuilder: (context, index) {
@@ -419,71 +432,56 @@ class _HomeTab extends StatelessWidget {
           onTap: () {
             final topics = appProvider.currentTopics;
             if (topics.isNotEmpty) {
+              // Lấy chủ đề đầu tiên và điều hướng thẳng vào game tương ứng
+              final topic = topics[0];
+              final gameType = games[index]['type'] as String;
+              Widget gameScreen;
+              switch (gameType) {
+                case 'flashcard':
+                  gameScreen = FlashcardGameScreen(topic: topic);
+                  break;
+                case 'quiz':
+                  gameScreen = QuizGameScreen(topic: topic);
+                  break;
+                case 'matching':
+                  gameScreen = MatchingGameScreen(topic: topic);
+                  break;
+                case 'listening':
+                  gameScreen = ListeningGameScreen(topic: topic);
+                  break;
+                default:
+                  gameScreen = FlashcardGameScreen(topic: topic);
+              }
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => GameSelectionScreen(topic: topics[0]),
-                ),
+                MaterialPageRoute(builder: (_) => gameScreen),
               );
             }
           },
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLowest,
-              borderRadius: BorderRadius.circular(32),
-              border: Border.all(
-                color: AppColors.outlineVariant,
-                width: 1.5,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+              color: games[index]['cardBg'] as Color,
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  games[index]['icon'] as IconData,
+                  color: games[index]['iconColor'] as Color,
+                  size: 48,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  games[index]['title'] as String,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: games[index]['titleColor'] as Color,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.2,
+                  ),
                 ),
               ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: (games[index]['color'] as Color).withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      games[index]['icon'] as IconData,
-                      color: games[index]['color'] as Color,
-                      size: 22,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        games[index]['title'] as String,
-                        style: const TextStyle(
-                          color: AppColors.onSurface,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        games[index]['desc'] as String,
-                        style: const TextStyle(
-                          color: AppColors.onSurfaceVariant,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
             ),
           ),
         );

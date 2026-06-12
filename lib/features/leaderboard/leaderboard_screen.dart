@@ -44,7 +44,7 @@ class LeaderboardScreen extends StatelessWidget {
                   color: AppColors.surfaceContainerLowest,
                   borderRadius: BorderRadius.circular(32),
                   border: Border.all(
-                    color: AppColors.outlineVariant,
+                    color: const Color.fromARGB(255, 217, 212, 224),
                     width: 1.5,
                   ),
                   boxShadow: [
@@ -89,7 +89,7 @@ class LeaderboardScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w800,
                                   color: isCurrentUser
                                       ? AppColors.primary
-                                      : AppColors.outline,
+                                      : const Color.fromARGB(255, 216, 210, 224),
                                 ),
                               ),
                             ),

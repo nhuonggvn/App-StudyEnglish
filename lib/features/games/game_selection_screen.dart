@@ -6,6 +6,61 @@ import 'quiz/quiz_game_screen.dart';
 import 'matching/matching_game_screen.dart';
 import 'listening/listening_game_screen.dart';
 
+// Dữ liệu cấu hình cho từng chế độ chơi
+class _GameMode {
+  final String id;
+  final String title;
+  final IconData icon;
+  final Color cardBg;       // Màu nền đặc trưng của thẻ
+  final Color iconColor;    // Màu icon
+  final Color titleColor;   // Màu chữ tiêu đề
+
+  const _GameMode({
+    required this.id,
+    required this.title,
+    required this.icon,
+    required this.cardBg,
+    required this.iconColor,
+    required this.titleColor,
+  });
+}
+
+// Danh sách 4 chế độ chơi với màu sắc riêng biệt
+const List<_GameMode> _gameModes = [
+  _GameMode(
+    id: 'flashcard',
+    title: 'Flashcard',
+    icon: Icons.style_rounded,
+    cardBg: Color(0xFFEADDFF),   // Tím nhạt (primaryFixed)
+    iconColor: Color(0xFF6B38D4), // Tím đậm (primary)
+    titleColor: Color(0xFF21005D),
+  ),
+  _GameMode(
+    id: 'quiz',
+    title: 'Trắc nghiệm',
+    icon: Icons.quiz_rounded,
+    cardBg: Color(0xFFB3EFDA),   // Xanh mint nhạt
+    iconColor: Color(0xFF006C49), // Xanh lá đậm (secondary)
+    titleColor: Color(0xFF002117),
+  ),
+  _GameMode(
+    id: 'matching',
+    title: 'Ghép hình',
+    icon: Icons.extension_rounded,
+    cardBg: Color(0xFFFFDEBB),   // Cam đào nhạt (tertiaryFixed)
+    iconColor: Color(0xFF7D4E00), // Cam nâu đậm (tertiary)
+    titleColor: Color(0xFF281900),
+  ),
+  _GameMode(
+    id: 'listening',
+    title: 'Nghe & Chọn',
+    icon: Icons.headphones_rounded,
+    cardBg: Color(0xFFD3E4FF),   // Xanh dương nhạt (primaryContainer)
+    iconColor: Color(0xFF2B5FAB), // Xanh dương đậm
+    titleColor: Color(0xFF001C40),
+  ),
+];
+
 class GameSelectionScreen extends StatelessWidget {
   final TopicData topic;
 
@@ -20,6 +75,7 @@ class GameSelectionScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Custom App Bar
             Padding(
@@ -82,7 +138,7 @@ class GameSelectionScreen extends StatelessWidget {
                       child: Text(
                         topic.emoji,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -92,52 +148,41 @@ class GameSelectionScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 12),
-
-            // Game cards list
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                children: [
-                  _GameOptionCard(
-                    title: 'Flashcard',
-                    description: 'Lật thẻ để học từ vựng trực quan sinh động',
-                    icon: Icons.style_rounded,
-                    iconBg: AppColors.primaryFixed,
-                    iconColor: AppColors.primary,
-                    onTap: () => _navigateToGame(context, 'flashcard'),
-                  ),
-                  const SizedBox(height: 14),
-                  _GameOptionCard(
-                    title: 'Trắc nghiệm',
-                    description: 'Trả lời nhanh để củng cố phản xạ nghĩa của từ',
-                    icon: Icons.quiz_rounded,
-                    iconBg: AppColors.secondaryContainer,
-                    iconColor: AppColors.secondary,
-                    onTap: () => _navigateToGame(context, 'quiz'),
-                  ),
-                  const SizedBox(height: 14),
-                  _GameOptionCard(
-                    title: 'Ghép hình',
-                    description: 'Ghép nối từ tiếng Anh tương ứng với ảnh minh họa',
-                    icon: Icons.extension_rounded,
-                    iconBg: AppColors.tertiaryFixed,
-                    iconColor: AppColors.tertiary,
-                    onTap: () => _navigateToGame(context, 'matching'),
-                  ),
-                  const SizedBox(height: 14),
-                  _GameOptionCard(
-                    title: 'Nghe & Chọn',
-                    description: 'Nghe phát âm chuẩn bản ngữ và chọn thẻ đáp án',
-                    icon: Icons.headphones_rounded,
-                    iconBg: AppColors.primaryFixed,
-                    iconColor: AppColors.primaryContainer,
-                    onTap: () => _navigateToGame(context, 'listening'),
-                  ),
-                  const SizedBox(height: 32),
-                ],
+            // Tiêu đề hướng dẫn
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                'Chọn chế độ chơi',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.onSurfaceVariant,
+                ),
               ),
             ),
+
+            const SizedBox(height: 16),
+
+            // Lưới 2 cột các chế độ chơi
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
+                  childAspectRatio: 1.0,
+                  children: _gameModes.map((mode) {
+                    return _GameModeCard(
+                      mode: mode,
+                      onTap: () => _navigateToGame(context, mode.id),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 24),
           ],
         ),
       ),
@@ -169,28 +214,21 @@ class GameSelectionScreen extends StatelessWidget {
   }
 }
 
-class _GameOptionCard extends StatefulWidget {
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color iconBg;
-  final Color iconColor;
+// Widget thẻ chế độ chơi dạng ô vuông với màu nền riêng
+class _GameModeCard extends StatefulWidget {
+  final _GameMode mode;
   final VoidCallback onTap;
 
-  const _GameOptionCard({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.iconBg,
-    required this.iconColor,
+  const _GameModeCard({
+    required this.mode,
     required this.onTap,
   });
 
   @override
-  State<_GameOptionCard> createState() => _GameOptionCardState();
+  State<_GameModeCard> createState() => _GameModeCardState();
 }
 
-class _GameOptionCardState extends State<_GameOptionCard>
+class _GameModeCardState extends State<_GameModeCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
@@ -200,9 +238,9 @@ class _GameOptionCardState extends State<_GameOptionCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 120),
     );
-    _scale = Tween<double>(begin: 1.0, end: 0.95).animate(
+    _scale = Tween<double>(begin: 1.0, end: 0.93).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
@@ -225,66 +263,31 @@ class _GameOptionCardState extends State<_GameOptionCard>
       child: ScaleTransition(
         scale: _scale,
         child: Container(
-          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
-            borderRadius: BorderRadius.circular(32),
-            border: Border.all(
-              color: AppColors.outlineVariant,
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.04),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            // Màu nền đặc trưng riêng của từng chế độ
+            color: widget.mode.cardBg,
+            borderRadius: BorderRadius.circular(28),
           ),
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: widget.iconBg,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(
-                  widget.icon,
-                  color: widget.iconColor,
-                  size: 22,
-                ),
+              // Icon lớn ở giữa thẻ
+              Icon(
+                widget.mode.icon,
+                color: widget.mode.iconColor,
+                size: 52,
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        color: AppColors.onSurface,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.description,
-                      style: const TextStyle(
-                        color: AppColors.onSurfaceVariant,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 12),
+              // Tên chế độ chơi — không có chữ mô tả phía dưới
+              Text(
+                widget.mode.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                  color: widget.mode.titleColor,
+                  letterSpacing: -0.2,
                 ),
-              ),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: AppColors.outline,
-                size: 14,
               ),
             ],
           ),
