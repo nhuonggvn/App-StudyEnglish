@@ -18,19 +18,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   // Onboarding data
   final List<Map<String, String>> _pages = [
     {
-      'title': 'Chao mung den voi\nKidEnglish!',
-      'desc': 'Cung hoc tieng Anh qua nhung tro choi thu vi nhe!',
-      'emoji': 'KE',
+      'title': 'Chào mừng đến với\nLingoKids!',
+      'desc': 'Cùng học tiếng Anh qua những trò chơi thú vị nhé!',
+      'emoji': 'LK',
     },
     {
-      'title': 'Hoc ma choi\nChoi ma hoc',
-      'desc': 'Nhieu tro choi hap dan giup con hoc nhanh hon!',
-      'emoji': 'GM',
+      'title': 'Học mà chơi\nChơi mà học',
+      'desc': 'Nhiều trò chơi hấp dẫn giúp con học nhanh hơn!',
+      'emoji': '🎮',
     },
     {
-      'title': 'Theo doi\ntien do',
-      'desc': 'Ba me co the theo doi qua trinh hoc cua con!',
-      'emoji': 'RP',
+      'title': 'Theo dõi\ntiến độ',
+      'desc': 'Ba mẹ có thể theo dõi quá trình học tập của con!',
+      'emoji': '📊',
     },
   ];
 
@@ -40,27 +40,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   String _selectedAvatar = '';
   bool _showProfileSetup = false;
 
+  // Sử dụng các con vật siêu đáng yêu để các bé lựa chọn thay vì chữ viết tắt
   final List<String> _avatarOptions = [
-    'TH', // Tho
-    'ME', // Meo
-    'CU', // Cuu
-    'GA', // Gau
-    'SU', // Su tu
-    'VO', // Voi
-    'KH', // Khi
-    'CH', // Chim
+    '🦁', // Sư tử
+    '🐼', // Gấu trúc
+    '🦊', // Cáo
+    '🐰', // Thỏ
+    '🐨', // Koala
+    '🐯', // Hổ
+    '🐸', // Ếch
+    '🐵', // Khỉ
   ];
 
-  // Đổi thành một danh sách màu xanh dịu phối hợp tinh tế
+  // Danh sách màu pastel phối hợp nhẹ nhàng tương ứng với mỗi avatar
   final List<Color> _avatarColors = [
-    AppColors.primaryGreen,
-    const Color(0xFF2E8B57),
-    const Color(0xFF156E3D),
-    const Color(0xFF3CB371),
-    AppColors.primaryGreen,
-    const Color(0xFF2E8B57),
-    const Color(0xFF156E3D),
-    const Color(0xFF3CB371),
+    const Color(0xFFFFE0B2), // Cam nhạt cho Sư tử
+    const Color(0xFFECEFF1), // Xám nhạt cho Gấu trúc
+    const Color(0xFFFFCC80), // Cam sậm cho Cáo
+    const Color(0xFFF8BBD0), // Hồng nhạt cho Thỏ
+    const Color(0xFFD7CCC8), // Nâu nhạt cho Koala
+    const Color(0xFFFFE0B2), // Cam cho Hổ
+    const Color(0xFFC8E6C9), // Xanh lá nhạt cho Ếch
+    const Color(0xFFD7CCC8), // Nâu cho Khỉ
   ];
 
   @override
@@ -87,11 +88,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_nameController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Hay nhap ten cua con nhe!'),
-          backgroundColor: AppColors.primaryGreen,
+          content: const Text('Hãy nhập tên của con nhé!'),
+          backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       );
       return;
@@ -100,11 +100,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_selectedAgeGroup == -1) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Hay chon do tuoi nhe!'),
-          backgroundColor: AppColors.primaryGreen,
+          content: const Text('Hãy chọn độ tuổi nhé!'),
+          backgroundColor: AppColors.primary,
           behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       );
       return;
@@ -120,8 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const HomeScreen(),
+        pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
@@ -148,18 +146,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // Skip button
               Align(
                 alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _showProfileSetup = true;
-                    });
-                  },
-                  child: const Text(
-                    'Bo qua',
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _showProfileSetup = true;
+                      });
+                    },
+                    child: const Text(
+                      'Bỏ qua',
+                      style: TextStyle(
+                        color: AppColors.outline,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -193,12 +194,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: _currentPage == index ? 24 : 8,
+                    width: _currentPage == index ? 28 : 8,
                     height: 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? AppColors.primaryGreen
-                          : AppColors.primaryGreen.withValues(alpha: 0.2),
+                          ? AppColors.primary
+                          : AppColors.primary.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -212,24 +213,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 52,
+                  height: 56,
                   child: ElevatedButton(
                     onPressed: _nextPage,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryGreen,
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(28),
                       ),
                     ),
                     child: Text(
-                      _currentPage == _pages.length - 1
-                          ? 'Bat dau nao!'
-                          : 'Tiep theo',
+                      _currentPage == _pages.length - 1 ? 'Bắt đầu nào!' : 'Tiếp theo',
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.2,
                       ),
                     ),
                   ),
@@ -250,21 +250,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Illustration container
+          // Illustration container - Đổi sang màu tím nhẹ thương hiệu
           Container(
             width: 180,
             height: 180,
             decoration: const BoxDecoration(
-              color: AppColors.softGreenTint,
+              color: Color(0xFFF3EDF7), // Tím nhạt nhẽo của thiết kế mới
               shape: BoxShape.circle,
             ),
             child: Center(
               child: Text(
                 emoji,
-                style: const TextStyle(
-                  fontSize: 56,
+                style: TextStyle(
+                  fontSize: emoji.length > 2 ? 42 : 56,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.primaryGreen,
+                  color: AppColors.primary,
                 ),
               ),
             ),
@@ -277,22 +277,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-              height: 1.25,
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: AppColors.onSurface,
+              letterSpacing: -0.5,
+              height: 1.2,
             ),
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
 
           // Description
           Text(
             desc,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
+              fontSize: 15,
+              color: AppColors.outline,
+              fontWeight: FontWeight.w600,
               height: 1.4,
             ),
           ),
@@ -303,54 +305,56 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildProfileSetup() {
     return Scaffold(
-      body: Container(
-        color: AppColors.backgroundLight,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
+      backgroundColor: AppColors.backgroundLight,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
 
-                // Title
-                const Center(
-                  child: Text(
-                    'Thiet lap ho so',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 6),
-                const Center(
-                  child: Text(
-                    'Hay cho chung toi biet ve con nhe!',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 28),
-
-                // Avatar selection
-                const Text(
-                  'Chon hinh dai dien:',
+              // Title
+              const Center(
+                child: Text(
+                  'Thiết lập hồ sơ',
                   style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.onSurface,
+                    letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+              ),
+
+              const SizedBox(height: 6),
+              const Center(
+                child: Text(
+                  'Hãy cho chúng tôi biết về con nhé!',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.outline,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 28),
+
+              // Avatar selection
+              const Text(
+                'Chọn hình đại diện:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.onSurface,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Center(
+                child: Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
                   children: List.generate(_avatarOptions.length, (index) {
                     bool isSelected = _selectedAvatar == _avatarOptions[index];
                     return GestureDetector(
@@ -361,28 +365,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        width: 56,
-                        height: 56,
+                        width: 64,
+                        height: 64,
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? _avatarColors[index]
-                              : _avatarColors[index].withValues(alpha: 0.1),
+                              ? AppColors.primary
+                              : _avatarColors[index],
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: isSelected
-                                ? _avatarColors[index]
-                                : Colors.transparent,
+                            color: isSelected ? AppColors.primary : Colors.transparent,
                             width: 2.5,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: isSelected ? 0.2 : 0.02),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            )
+                          ],
                         ),
                         child: Center(
                           child: Text(
                             _avatarOptions[index],
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color:
-                                  isSelected ? Colors.white : _avatarColors[index],
+                            style: const TextStyle(
+                              fontSize: 28,
                             ),
                           ),
                         ),
@@ -390,105 +396,109 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     );
                   }),
                 ),
+              ),
 
-                const SizedBox(height: 28),
+              const SizedBox(height: 28),
 
-                // Name input
-                const Text(
-                  'Ten cua con:',
-                  style: TextStyle(
-                    fontSize: 15,
+              // Name input
+              const Text(
+                'Tên của con:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.onSurface,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _nameController,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.onSurface,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Nhập tên con...',
+                  hintStyle: const TextStyle(
+                    color: AppColors.outline,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: AppColors.outlineVariant,
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(
+                      color: AppColors.primary,
+                      width: 2,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.person_outline_rounded,
+                    color: AppColors.primary,
+                    size: 20,
                   ),
                 ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: _nameController,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: 'Nhap ten con...',
-                    hintStyle: const TextStyle(
-                      color: AppColors.textHint,
-                      fontSize: 14,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: AppColors.primaryGreen.withValues(alpha: 0.15),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: AppColors.primaryGreen,
-                        width: 1.5,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.person_outline_rounded,
-                      color: AppColors.primaryGreen,
-                      size: 20,
-                    ),
-                  ),
+              ),
+
+              const SizedBox(height: 28),
+
+              // Age group selection
+              const Text(
+                'Con bao nhiêu tuổi?',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.onSurface,
                 ),
+              ),
+              const SizedBox(height: 12),
+              ..._buildAgeGroupCards(),
 
-                const SizedBox(height: 28),
+              const SizedBox(height: 32),
 
-                // Age group selection
-                const Text(
-                  'Con bao nhieu tuoi?',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ..._buildAgeGroupCards(),
-
-                const SizedBox(height: 32),
-
-                // Continue button
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: _completeSetup,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryGreen,
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+              // Continue button
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: _completeSetup,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
                     ),
-                    child: const Text(
-                      'Bat dau hoc nao!',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  ),
+                  child: const Text(
+                    'Bắt đầu học nào!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.2,
                     ),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 20),
-              ],
-            ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
@@ -498,21 +508,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<Widget> _buildAgeGroupCards() {
     final ageGroups = [
       {
-        'label': '3-5 tuoi',
-        'desc': 'Mam non',
-        'color': AppColors.primaryGreen,
+        'label': '3-5 tuổi',
+        'desc': 'Mầm non',
+        'color': AppColors.primary,
         'icon': Icons.child_care_rounded,
       },
       {
-        'label': '6-7 tuoi',
-        'desc': 'Lop 1-2',
-        'color': AppColors.primaryGreen,
+        'label': '6-7 tuổi',
+        'desc': 'Lớp 1-2',
+        'color': AppColors.primary,
         'icon': Icons.school_rounded,
       },
       {
-        'label': '8-10 tuoi',
-        'desc': 'Lop 3-5',
-        'color': AppColors.primaryGreen,
+        'label': '8-10 tuổi',
+        'desc': 'Lớp 3-5',
+        'color': AppColors.primary,
         'icon': Icons.auto_stories_rounded,
       },
     ];
@@ -522,7 +532,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       Color cardColor = ageGroups[index]['color'] as Color;
 
       return Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(bottom: 12),
         child: GestureDetector(
           onTap: () {
             setState(() {
@@ -531,19 +541,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isSelected ? cardColor : Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: isSelected ? cardColor : cardColor.withValues(alpha: 0.15),
+                color: isSelected ? cardColor : AppColors.outlineVariant,
                 width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.01),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
+                  color: AppColors.primary.withValues(alpha: isSelected ? 0.08 : 0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
@@ -555,7 +565,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? Colors.white.withValues(alpha: 0.2)
-                        : AppColors.softGreenTint,
+                        : const Color(0xFFF3EDF7), // Tím nhạt nhẽo chuẩn Bento
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -572,8 +582,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ageGroups[index]['label'] as String,
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: isSelected ? Colors.white : AppColors.textPrimary,
+                        fontWeight: FontWeight.w800,
+                        color: isSelected ? Colors.white : AppColors.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -581,9 +591,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ageGroups[index]['desc'] as String,
                       style: TextStyle(
                         fontSize: 12,
+                        fontWeight: FontWeight.w600,
                         color: isSelected
                             ? Colors.white.withValues(alpha: 0.8)
-                            : AppColors.textSecondary,
+                            : AppColors.outline,
                       ),
                     ),
                   ],
