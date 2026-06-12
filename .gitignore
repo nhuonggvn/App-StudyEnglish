@@ -1,4 +1,3 @@
-# Miscellaneous
 *.class
 *.log
 *.pyc
@@ -18,28 +17,45 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code related
+.vscode/
+!.vscode/extensions.json
 
-# Flutter/Dart/Pub related
 **/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
 /build/
 /coverage/
 
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
+# Android - Cấu hình cục bộ
+/android/local.properties
+/android/key.properties
 /android/app/debug
 /android/app/profile
 /android/app/release
+*.apk
+*.aar
+*.ap_
+*.aab
+
+
+# iOS - Cấu hình cục bộ 
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/.last_build_id
+*.xcworkspace
+!ios/Runner.xcworkspace
+Pods/
+Podfile.lock
+.symlinks/
+
+app.*.symbols
+app.*.map.json
+
+.env
+*.env
+.env.*
+!*.env.example
