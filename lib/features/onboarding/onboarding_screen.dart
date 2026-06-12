@@ -18,7 +18,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   // Onboarding data
   final List<Map<String, String>> _pages = [
     {
-      'title': 'Chào mừng đến với\nLingoKids!',
+      'title': 'Chào mừng đến với\nStudyEnglish!',
       'desc': 'Cùng học tiếng Anh qua những trò chơi thú vị nhé!',
       'emoji': 'LK',
     },

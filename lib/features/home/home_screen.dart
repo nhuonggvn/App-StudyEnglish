@@ -262,7 +262,7 @@ class _HomeTab extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             const Text(
-              'LingoKids',
+              'StudyEnglish',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,

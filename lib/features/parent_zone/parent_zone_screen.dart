@@ -124,7 +124,7 @@ class _ParentZoneScreenState extends State<ParentZoneScreen> {
             ),
             const SizedBox(width: 12),
             const Text(
-              'LingoKids',
+              'StudyEnglish',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
