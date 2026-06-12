@@ -1,6 +1,6 @@
-# LingoKids - Ứng dụng Học Tiếng Anh Bento UI Cho Trẻ Em
+# StudyEnglish - Ứng dụng Học Tiếng Anh
 
-LingoKids là ứng dụng học tiếng Anh tương tác dành cho lứa tuổi mầm non và tiểu học (từ 3 đến 10 tuổi). Ứng dụng được thiết kế hoàn toàn theo phong cách **Minimalist Bento UI** hiện đại, sử dụng tông màu chủ đạo tím-xanh tinh tế, bo góc lớn và các hiệu ứng nút nhấn 3D vật lý sinh động giúp tăng tính tương tác và tạo sự thích thú cho trẻ trong quá trình học tập.
+StudyEnglish là ứng dụng học tiếng Anh tương tác dành cho lứa tuổi mầm non và tiểu học (từ 3 đến 10 tuổi). Ứng dụng được thiết kế hoàn toàn theo phong cách **Minimalis UI** hiện đại, sử dụng tông màu chủ đạo tím-xanh tinh tế, bo góc lớn và các hiệu ứng nút nhấn 3D vật lý sinh động giúp tăng tính tương tác và tạo sự thích thú cho trẻ trong quá trình học tập.
 
 ---
 
