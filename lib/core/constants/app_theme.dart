@@ -9,10 +9,10 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      colorScheme: ColorScheme.light(
-        primary: AppColors.primaryBlue,
-        secondary: AppColors.primaryPurple,
-        tertiary: AppColors.primaryPink,
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        tertiary: AppColors.tertiary,
         surface: AppColors.surfaceLight,
         error: AppColors.error,
       ),
@@ -22,9 +22,9 @@ class AppTheme {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.fredoka(
-          fontSize: 22,
-          fontWeight: FontWeight.w600,
+        titleTextStyle: GoogleFonts.nunitoSans(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
         iconTheme: const IconThemeData(
@@ -33,89 +33,89 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryBlue,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
-          elevation: 4,
-          shadowColor: AppColors.primaryBlue.withValues(alpha: 0.4),
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
           ),
-          textStyle: GoogleFonts.fredoka(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+          textStyle: GoogleFonts.nunitoSans(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
       cardTheme: CardThemeData(
-        color: AppColors.backgroundCard,
-        elevation: 8,
-        shadowColor: Colors.black.withValues(alpha: 0.1),
+        color: AppColors.surfaceContainerLowest,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(32),
+          side: const BorderSide(color: AppColors.outlineVariant, width: 1.5),
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        selectedItemColor: AppColors.primaryPurple,
-        unselectedItemColor: AppColors.textHint,
+        backgroundColor: AppColors.surfaceContainerLowest,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.outline,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        elevation: 20,
+        elevation: 8,
       ),
     );
   }
 
   static TextTheme get _textTheme {
     return TextTheme(
-      displayLarge: GoogleFonts.fredoka(
-        fontSize: 36,
+      displayLarge: GoogleFonts.nunitoSans(
+        fontSize: 32,
+        fontWeight: FontWeight.w800,
+        color: AppColors.textPrimary,
+        letterSpacing: -0.02,
+      ),
+      displayMedium: GoogleFonts.nunitoSans(
+        fontSize: 26,
+        fontWeight: FontWeight.w800,
+        color: AppColors.textPrimary,
+      ),
+      displaySmall: GoogleFonts.nunitoSans(
+        fontSize: 22,
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
       ),
-      displayMedium: GoogleFonts.fredoka(
-        fontSize: 28,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary,
-      ),
-      displaySmall: GoogleFonts.fredoka(
-        fontSize: 24,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary,
-      ),
-      headlineMedium: GoogleFonts.fredoka(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary,
-      ),
-      headlineSmall: GoogleFonts.fredoka(
+      headlineMedium: GoogleFonts.nunitoSans(
         fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+      ),
+      headlineSmall: GoogleFonts.nunitoSans(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
+      titleLarge: GoogleFonts.nunitoSans(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
+      bodyLarge: GoogleFonts.nunitoSans(
+        fontSize: 15,
         fontWeight: FontWeight.w500,
         color: AppColors.textPrimary,
       ),
-      titleLarge: GoogleFonts.fredoka(
-        fontSize: 16,
+      bodyMedium: GoogleFonts.nunitoSans(
+        fontSize: 13,
         fontWeight: FontWeight.w500,
-        color: AppColors.textPrimary,
-      ),
-      bodyLarge: GoogleFonts.nunito(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: AppColors.textPrimary,
-      ),
-      bodyMedium: GoogleFonts.nunito(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
         color: AppColors.textSecondary,
       ),
-      bodySmall: GoogleFonts.nunito(
-        fontSize: 12,
+      bodySmall: GoogleFonts.nunitoSans(
+        fontSize: 11,
         fontWeight: FontWeight.w400,
         color: AppColors.textHint,
       ),
-      labelLarge: GoogleFonts.fredoka(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
+      labelLarge: GoogleFonts.nunitoSans(
+        fontSize: 15,
+        fontWeight: FontWeight.w800,
         color: Colors.white,
       ),
     );

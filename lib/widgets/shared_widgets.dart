@@ -10,6 +10,8 @@ class GradientButton extends StatefulWidget {
   final double borderRadius;
   final double fontSize;
   final IconData? icon;
+  final Color backgroundColor;
+  final Color borderBottomColor;
 
   const GradientButton({
     super.key,
@@ -18,114 +20,95 @@ class GradientButton extends StatefulWidget {
     this.gradient,
     this.width,
     this.height = 56,
-    this.borderRadius = 28,
-    this.fontSize = 18,
+    this.borderRadius = 16,
+    this.fontSize = 16,
     this.icon,
+    this.backgroundColor = AppColors.primary,
+    this.borderBottomColor = const Color(0xFF5516BE), // Tím thẫm hơn
   });
 
   @override
   State<GradientButton> createState() => _GradientButtonState();
 }
 
-class _GradientButtonState extends State<GradientButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _GradientButtonState extends State<GradientButton> {
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
+    // Nút dạng Pushable Button 3D phẳng của Tailwind mockup:
+    // border-b-[4px] border-on-primary-fixed-variant
+    // active:translate-y-[2px] active:border-b-0
+    final double currentBorderBottom = _isPressed ? 0.0 : 4.0;
+    final double topMargin = _isPressed ? 4.0 : 0.0;
+    final double bottomMargin = _isPressed ? 0.0 : 4.0;
+
     return GestureDetector(
-      onTapDown: (_) => _controller.forward(),
+      onTapDown: (_) {
+        setState(() {
+          _isPressed = true;
+        });
+      },
       onTapUp: (_) {
-        _controller.reverse();
+        setState(() {
+          _isPressed = false;
+        });
         widget.onPressed();
       },
-      onTapCancel: () => _controller.reverse(),
-      child: AnimatedBuilder(
-        listenable: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Container(
-              width: widget.width,
-              height: widget.height,
-              decoration: BoxDecoration(
-                gradient: widget.gradient ?? AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-                boxShadow: [
+      onTapCancel: () {
+        setState(() {
+          _isPressed = false;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 60),
+        margin: EdgeInsets.only(top: topMargin, bottom: bottomMargin),
+        width: widget.width,
+        height: widget.height - 4,
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          border: Border(
+            bottom: BorderSide(
+              color: widget.borderBottomColor,
+              width: currentBorderBottom,
+            ),
+          ),
+          boxShadow: _isPressed
+              ? []
+              : [
                   BoxShadow(
-                    color: (widget.gradient?.colors.first ??
-                            AppColors.primaryBlue)
-                        .withValues(alpha: 0.4),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
+                    color: AppColors.primary.withValues(alpha: 0.15),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
                   ),
                 ],
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (widget.icon != null) ...[
-                      Icon(
-                        widget.icon,
-                        color: Colors.white,
-                        size: widget.fontSize + 4,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(
-                      widget.text,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: widget.fontSize,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ],
+        ),
+        child: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.icon != null) ...[
+                Icon(
+                  widget.icon,
+                  color: Colors.white,
+                  size: widget.fontSize + 4,
+                ),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                widget.text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: widget.fontSize,
+                  fontWeight: FontWeight.w800, // Đậm hơn giống mockup
                 ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
-  }
-}
-
-class AnimatedBuilder extends AnimatedWidget {
-  final Widget Function(BuildContext context, Widget? child) builder;
-  final Widget? child;
-
-  const AnimatedBuilder({
-    super.key,
-    required super.listenable,
-    required this.builder,
-    this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, child);
   }
 }
 
@@ -157,7 +140,7 @@ class _BounceWidgetState extends State<BounceWidget>
       vsync: this,
       duration: widget.duration,
     );
-    _scale = Tween<double>(begin: 1.0, end: 0.9).animate(
+    _scale = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
@@ -213,17 +196,22 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Áp dụng thiết kế Bento Grid: bo góc 32px, shadow nhẹ và viền nhạt
     return BounceWidget(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          gradient: gradient,
-          borderRadius: BorderRadius.circular(24),
+          color: AppColors.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(
+            color: AppColors.outlineVariant,
+            width: 1.5,
+          ),
           boxShadow: [
             BoxShadow(
-              color: gradient.colors.first.withValues(alpha: 0.4),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
+              color: AppColors.primary.withValues(alpha: 0.06),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
@@ -234,17 +222,16 @@ class GameCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(16),
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryFixed,
+                  shape: BoxShape.circle,
                 ),
                 child: Text(
                   emoji,
                   style: const TextStyle(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
                   ),
                 ),
               ),
@@ -252,18 +239,18 @@ class GameCard extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 subtitle,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.85),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -283,7 +270,7 @@ class StarRating extends StatelessWidget {
     super.key,
     required this.stars,
     this.maxStars = 3,
-    this.size = 32,
+    this.size = 28,
   });
 
   @override
@@ -295,7 +282,7 @@ class StarRating extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Icon(
             index < stars ? Icons.star_rounded : Icons.star_outline_rounded,
-            color: index < stars ? AppColors.starGold : AppColors.textHint,
+            color: index < stars ? AppColors.starGold : AppColors.outlineVariant,
             size: size,
           ),
         );
@@ -324,24 +311,27 @@ class TopicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Giao diện thẻ chủ đề bento bo góc 32px
     return BounceWidget(
       onTap: isLocked ? null : onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isLocked
-              ? Colors.grey.shade200
-              : Colors.white,
-          borderRadius: BorderRadius.circular(20),
+              ? AppColors.surfaceContainerLow
+              : AppColors.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(32),
           border: Border.all(
-            color: isLocked ? Colors.grey.shade300 : color.withValues(alpha: 0.3),
-            width: 2,
+            color: isLocked 
+                ? AppColors.outlineVariant.withValues(alpha: 0.5) 
+                : AppColors.outlineVariant,
+            width: 1.5,
           ),
           boxShadow: isLocked
               ? []
               : [
                   BoxShadow(
-                    color: color.withValues(alpha: 0.15),
+                    color: AppColors.primary.withValues(alpha: 0.04),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -351,25 +341,24 @@ class TopicCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: isLocked
-                    ? Colors.grey.shade300
-                    : color.withValues(alpha: 0.15),
+                    ? AppColors.surfaceContainerHighest
+                    : AppColors.primaryFixed,
                 shape: BoxShape.circle,
               ),
               child: isLocked
-                  ? Icon(
+                  ? const Icon(
                       Icons.lock_rounded,
-                      size: 28,
-                      color: Colors.grey.shade500,
+                      size: 22,
+                      color: AppColors.outline,
                     )
                   : Text(
                       emoji,
-                      style: TextStyle(
-                        fontSize: 24,
+                      style: const TextStyle(
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: color,
                       ),
                     ),
             ),
@@ -378,9 +367,9 @@ class TopicCard extends StatelessWidget {
               name,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: isLocked ? Colors.grey : AppColors.textPrimary,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                color: isLocked ? AppColors.outline : AppColors.textPrimary,
               ),
             ),
             if (!isLocked) ...[
@@ -389,9 +378,9 @@ class TopicCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: color.withValues(alpha: 0.15),
-                  valueColor: AlwaysStoppedAnimation<Color>(color),
-                  minHeight: 6,
+                  backgroundColor: AppColors.surfaceContainerHigh,
+                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.secondary),
+                  minHeight: 4,
                 ),
               ),
             ],

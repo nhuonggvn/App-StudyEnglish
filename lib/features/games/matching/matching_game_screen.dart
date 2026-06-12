@@ -95,126 +95,163 @@ class _MatchingGameScreenState extends State<MatchingGameScreen> {
   void _showResult() {
     showDialog(context: context, barrierDismissible: false,
       builder: (ctx) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-        child: Padding(padding: const EdgeInsets.all(28),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        backgroundColor: AppColors.surfaceContainerLowest,
+        child: Padding(padding: const EdgeInsets.all(32),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Container(width: 80, height: 80,
-              decoration: const BoxDecoration(gradient: AppColors.forestGradient, shape: BoxShape.circle),
-              child: const Icon(Icons.extension_rounded, color: Colors.white, size: 40)),
-            const SizedBox(height: 20),
-            const Text('Hoan thanh!', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 8),
-            Text('Da ghep ${_gameWords.length} cap trong $_attempts lan thu',
-              style: const TextStyle(fontSize: 14, color: AppColors.textSecondary)),
-            const SizedBox(height: 12),
+            Container(width: 64, height: 64,
+              decoration: const BoxDecoration(color: AppColors.primaryFixed, shape: BoxShape.circle),
+              child: const Icon(Icons.extension_rounded, color: AppColors.primary, size: 32)),
+            const SizedBox(height: 16),
+            const Text('Hoàn thành!', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.onSurface)),
+            const SizedBox(height: 6),
+            Text('Đã ghép ${_gameWords.length} cặp trong $_attempts lần thử',
+              style: const TextStyle(fontSize: 14, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(3, (i) {
                 int stars = _attempts <= _gameWords.length ? 3 : _attempts <= _gameWords.length * 2 ? 2 : 1;
                 return Icon(i < stars ? Icons.star_rounded : Icons.star_outline_rounded,
-                  color: i < stars ? AppColors.starGold : AppColors.textHint, size: 36);
+                  color: i < stars ? AppColors.tertiary : AppColors.outlineVariant, size: 28);
               })),
-            const SizedBox(height: 8),
-            Text('+$_score diem', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.primaryGreen)),
+            const SizedBox(height: 12),
+            Text('+$_score điểm', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primary)),
             const SizedBox(height: 24),
-            SizedBox(width: double.infinity, height: 50,
-              child: ElevatedButton(
-                onPressed: () { Navigator.of(ctx).pop(); Navigator.of(context).pop(); },
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryPurple,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
-                child: const Text('Hoan thanh', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)))),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(ctx).pop();
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                width: double.infinity,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(16),
+                  border: const Border(
+                    bottom: BorderSide(
+                      color: Color(0xFF5516BE), // Tím thẫm hơn
+                      width: 4,
+                    ),
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Hoàn thành',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ]))));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primary,
       body: Stack(children: [
-        Container(
-          decoration: const BoxDecoration(gradient: LinearGradient(
-            colors: [Color(0xFF00B894), Color(0xFF55EFC4)],
-            begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-          child: SafeArea(child: Column(children: [
-            Padding(padding: const EdgeInsets.all(16), child: Row(children: [
-              GestureDetector(onTap: () => Navigator.pop(context),
-                child: Container(width: 44, height: 44,
-                  decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(14)),
-                  child: const Icon(Icons.close_rounded, color: Colors.white))),
-              const Spacer(),
-              const Text('Ghep hinh', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)),
-              const Spacer(),
-              Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(16)),
-                child: Text('$_score', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700))),
-            ])),
-            const SizedBox(height: 8),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Ghep tu tieng Anh voi nghia tieng Viet',
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 14))),
-            const SizedBox(height: 16),
-            // Progress
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ClipRRect(borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: _matchedPairs.length / (_gameWords.length * 2),
-                  backgroundColor: Colors.white.withValues(alpha: 0.2),
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white), minHeight: 6))),
-            const SizedBox(height: 20),
-            // Game columns
-            Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(children: [
-                // English column
-                Expanded(child: ListView.builder(
-                  itemCount: _englishList.length,
-                  itemBuilder: (ctx, index) {
-                    String word = _englishList[index];
-                    bool isMatched = _matchedPairs.contains(word);
-                    bool isSelected = _selectedEnglish == word;
-                    return Padding(padding: const EdgeInsets.only(bottom: 10),
-                      child: GestureDetector(
-                        onTap: isMatched ? null : () => _selectEnglish(word),
-                        child: AnimatedContainer(duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: isMatched ? AppColors.primaryGreen.withValues(alpha: 0.2) : isSelected ? Colors.white : Colors.white.withValues(alpha: 0.9),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: isSelected ? AppColors.primaryBlue : Colors.transparent, width: 3),
-                            boxShadow: isMatched ? [] : [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 6, offset: const Offset(0, 3))]),
-                          child: Center(child: Text(word,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700,
-                              color: isMatched ? AppColors.primaryGreen : AppColors.textPrimary,
-                              decoration: isMatched ? TextDecoration.lineThrough : null))))));
-                  })),
-                const SizedBox(width: 12),
-                // Vietnamese column
-                Expanded(child: ListView.builder(
-                  itemCount: _vietnameseList.length,
-                  itemBuilder: (ctx, index) {
-                    String word = _vietnameseList[index];
-                    bool isMatched = _matchedPairs.contains(word);
-                    bool isSelected = _selectedVietnamese == word;
-                    return Padding(padding: const EdgeInsets.only(bottom: 10),
-                      child: GestureDetector(
-                        onTap: isMatched ? null : () => _selectVietnamese(word),
-                        child: AnimatedContainer(duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: isMatched ? AppColors.primaryGreen.withValues(alpha: 0.2) : isSelected ? Colors.white : Colors.white.withValues(alpha: 0.9),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: isSelected ? AppColors.primaryOrange : Colors.transparent, width: 3),
-                            boxShadow: isMatched ? [] : [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 6, offset: const Offset(0, 3))]),
-                          child: Center(child: Text(word,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,
-                              color: isMatched ? AppColors.primaryGreen : AppColors.textPrimary,
-                              decoration: isMatched ? TextDecoration.lineThrough : null))))));
-                  })),
-              ]))),
-          ]))),
+        SafeArea(child: Column(children: [
+          Padding(padding: const EdgeInsets.all(24), child: Row(children: [
+            GestureDetector(onTap: () => Navigator.pop(context),
+              child: Container(width: 44, height: 44,
+                decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
+                child: const Icon(Icons.close_rounded, color: Colors.white))),
+            const Spacer(),
+            const Text('Ghép hình', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+            const Spacer(),
+            Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
+              child: Text('$_score', style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w800))),
+          ])),
+          const SizedBox(height: 8),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: const Text('Ghép từ tiếng Anh với nghĩa tiếng Việt tương ứng',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600))),
+          const SizedBox(height: 16),
+          // Progress
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: ClipRRect(borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: _matchedPairs.length / (_gameWords.length * 2),
+                backgroundColor: Colors.white.withValues(alpha: 0.2),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.white), minHeight: 6))),
+          const SizedBox(height: 24),
+          // Game columns
+          Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(children: [
+              // English column
+              Expanded(child: ListView.builder(
+                itemCount: _englishList.length,
+                itemBuilder: (ctx, index) {
+                  String word = _englishList[index];
+                  bool isMatched = _matchedPairs.contains(word);
+                  bool isSelected = _selectedEnglish == word;
+                  return Padding(padding: const EdgeInsets.only(bottom: 12),
+                    child: GestureDetector(
+                      onTap: isMatched ? null : () => _selectEnglish(word),
+                      child: AnimatedContainer(duration: const Duration(milliseconds: 150),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: isMatched
+                              ? AppColors.secondaryContainer
+                              : isSelected ? Colors.white : AppColors.surfaceContainerLowest,
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.secondary
+                                : isMatched ? AppColors.secondary : AppColors.outlineVariant,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(child: Text(word,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800,
+                            color: isMatched ? AppColors.onSecondaryContainer : AppColors.onSurface,
+                            decoration: isMatched ? TextDecoration.lineThrough : null))))));
+                })),
+              const SizedBox(width: 14),
+              // Vietnamese column
+              Expanded(child: ListView.builder(
+                itemCount: _vietnameseList.length,
+                itemBuilder: (ctx, index) {
+                  String word = _vietnameseList[index];
+                  bool isMatched = _matchedPairs.contains(word);
+                  bool isSelected = _selectedVietnamese == word;
+                  return Padding(padding: const EdgeInsets.only(bottom: 12),
+                    child: GestureDetector(
+                      onTap: isMatched ? null : () => _selectVietnamese(word),
+                      child: AnimatedContainer(duration: const Duration(milliseconds: 150),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: isMatched
+                              ? AppColors.secondaryContainer
+                              : isSelected ? Colors.white : AppColors.surfaceContainerLowest,
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.secondary
+                                : isMatched ? AppColors.secondary : AppColors.outlineVariant,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(child: Text(word,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800,
+                            color: isMatched ? AppColors.onSecondaryContainer : AppColors.onSurface,
+                            decoration: isMatched ? TextDecoration.lineThrough : null))))));
+                })),
+            ]))),
+        ])),
         Align(alignment: Alignment.topCenter,
           child: ConfettiWidget(confettiController: _confettiController,
             blastDirectionality: BlastDirectionality.explosive, numberOfParticles: 25,
-            colors: const [AppColors.primaryPink, AppColors.primaryYellow, AppColors.primaryGreen])),
+            colors: const [AppColors.primary, AppColors.secondary, AppColors.tertiary])),
       ]));
   }
 }

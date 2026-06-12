@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen>
             // Animated bubbles background
             ...List.generate(12, (index) {
               return AnimatedBuilder(
-                listenable: _bubbleAnimation,
+                animation: _bubbleAnimation,
                 builder: (context, child) {
                   double progress = (_bubbleAnimation.value + index * 0.08) % 1.0;
                   double x = (index % 4) * (MediaQuery.of(context).size.width / 4) +
@@ -144,13 +144,13 @@ class _SplashScreenState extends State<SplashScreen>
                     left: x,
                     top: y,
                     child: Opacity(
-                      opacity: opacity * 0.3,
+                      opacity: opacity * 0.2,
                       child: Container(
                         width: size,
                         height: size,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.4),
+                          color: Colors.white.withValues(alpha: 0.3),
                         ),
                       ),
                     ),
@@ -166,7 +166,7 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   // Logo
                   AnimatedBuilder(
-                    listenable: _logoController,
+                    animation: _logoController,
                     builder: (context, child) {
                       return Transform.scale(
                         scale: _logoScale.value,
@@ -180,19 +180,19 @@ class _SplashScreenState extends State<SplashScreen>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.2),
-                                  blurRadius: 30,
-                                  offset: const Offset(0, 10),
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 8),
                                 ),
                               ],
                             ),
                             child: const Center(
                               child: Text(
-                                'KE',
+                                'LK',
                                 style: TextStyle(
                                   fontSize: 48,
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFF667EEA),
+                                  color: AppColors.primary,
                                   letterSpacing: 2,
                                 ),
                               ),
@@ -213,29 +213,29 @@ class _SplashScreenState extends State<SplashScreen>
                       child: Column(
                         children: [
                           const Text(
-                            'KidEnglish',
+                            'LingoKids',
                             style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.w800,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w900,
                               color: Colors.white,
-                              letterSpacing: 2,
+                              letterSpacing: 1.5,
                               shadows: [
                                 Shadow(
-                                  color: Colors.black26,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 4),
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
                                 ),
                               ],
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Hoc tieng Anh vui ve!',
+                            'Học tiếng Anh vui vẻ cùng bé!',
                             style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
                               color: Colors.white.withValues(alpha: 0.9),
-                              letterSpacing: 1,
+                              letterSpacing: 0.5,
                             ),
                           ),
                         ],
@@ -249,12 +249,12 @@ class _SplashScreenState extends State<SplashScreen>
                   FadeTransition(
                     opacity: _textOpacity,
                     child: SizedBox(
-                      width: 40,
-                      height: 40,
+                      width: 36,
+                      height: 36,
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.white.withValues(alpha: 0.7),
+                          Colors.white.withValues(alpha: 0.6),
                         ),
                       ),
                     ),
@@ -266,22 +266,5 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       ),
     );
-  }
-}
-
-class AnimatedBuilder extends AnimatedWidget {
-  final Widget Function(BuildContext context, Widget? child) builder;
-  final Widget? child;
-
-  const AnimatedBuilder({
-    super.key,
-    required super.listenable,
-    required this.builder,
-    this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return builder(context, child);
   }
 }

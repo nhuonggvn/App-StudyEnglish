@@ -17,138 +17,128 @@ class GameSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFF8F9FF), Color(0xFFEEF0FF)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // App bar
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.06),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back_rounded,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            topic.name,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          Text(
-                            '${topic.words.length} tu vung',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(12),
+      backgroundColor: AppColors.backgroundLight,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Custom App Bar
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 44,
+                      height: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.primaryPurple.withValues(alpha: 0.1),
-                        shape: BoxShape.circle,
+                        color: AppColors.surfaceContainerLowest,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppColors.outlineVariant,
+                          width: 1.5,
+                        ),
                       ),
+                      child: const Icon(
+                        Icons.arrow_back_rounded,
+                        color: AppColors.onSurface,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          topic.name,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.onSurface,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        Text(
+                          '${topic.words.length} từ vựng học tập',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryFixed,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
                       child: Text(
                         topic.emoji,
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryPurple,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 12),
 
-              // Game cards
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  children: [
-                    _GameOptionCard(
-                      title: 'Flashcard',
-                      description: 'Lat the de hoc tu vung voi phat am chuan',
-                      icon: Icons.style_rounded,
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF6C5CE7), Color(0xFFA29BFE)],
-                      ),
-                      onTap: () => _navigateToGame(context, 'flashcard'),
-                    ),
-                    const SizedBox(height: 14),
-                    _GameOptionCard(
-                      title: 'Trac nghiem',
-                      description: 'Tra loi nhanh de kiem tra tu vung',
-                      icon: Icons.quiz_rounded,
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFFF7675), Color(0xFFFD79A8)],
-                      ),
-                      onTap: () => _navigateToGame(context, 'quiz'),
-                    ),
-                    const SizedBox(height: 14),
-                    _GameOptionCard(
-                      title: 'Ghep hinh',
-                      description: 'Ghep tu tieng Anh voi nghia tieng Viet',
-                      icon: Icons.extension_rounded,
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF00B894), Color(0xFF55EFC4)],
-                      ),
-                      onTap: () => _navigateToGame(context, 'matching'),
-                    ),
-                    const SizedBox(height: 14),
-                    _GameOptionCard(
-                      title: 'Nghe & Chon',
-                      description: 'Nghe phat am va chon dap an dung',
-                      icon: Icons.headphones_rounded,
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF0984E3), Color(0xFF74B9FF)],
-                      ),
-                      onTap: () => _navigateToGame(context, 'listening'),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+            // Game cards list
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                children: [
+                  _GameOptionCard(
+                    title: 'Flashcard',
+                    description: 'Lật thẻ để học từ vựng trực quan sinh động',
+                    icon: Icons.style_rounded,
+                    iconBg: AppColors.primaryFixed,
+                    iconColor: AppColors.primary,
+                    onTap: () => _navigateToGame(context, 'flashcard'),
+                  ),
+                  const SizedBox(height: 14),
+                  _GameOptionCard(
+                    title: 'Trắc nghiệm',
+                    description: 'Trả lời nhanh để củng cố phản xạ nghĩa của từ',
+                    icon: Icons.quiz_rounded,
+                    iconBg: AppColors.secondaryContainer,
+                    iconColor: AppColors.secondary,
+                    onTap: () => _navigateToGame(context, 'quiz'),
+                  ),
+                  const SizedBox(height: 14),
+                  _GameOptionCard(
+                    title: 'Ghép hình',
+                    description: 'Ghép nối từ tiếng Anh tương ứng với ảnh minh họa',
+                    icon: Icons.extension_rounded,
+                    iconBg: AppColors.tertiaryFixed,
+                    iconColor: AppColors.tertiary,
+                    onTap: () => _navigateToGame(context, 'matching'),
+                  ),
+                  const SizedBox(height: 14),
+                  _GameOptionCard(
+                    title: 'Nghe & Chọn',
+                    description: 'Nghe phát âm chuẩn bản ngữ và chọn thẻ đáp án',
+                    icon: Icons.headphones_rounded,
+                    iconBg: AppColors.primaryFixed,
+                    iconColor: AppColors.primaryContainer,
+                    onTap: () => _navigateToGame(context, 'listening'),
+                  ),
+                  const SizedBox(height: 32),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -183,14 +173,16 @@ class _GameOptionCard extends StatefulWidget {
   final String title;
   final String description;
   final IconData icon;
-  final LinearGradient gradient;
+  final Color iconBg;
+  final Color iconColor;
   final VoidCallback onTap;
 
   const _GameOptionCard({
     required this.title,
     required this.description,
     required this.icon,
-    required this.gradient,
+    required this.iconBg,
+    required this.iconColor,
     required this.onTap,
   });
 
@@ -235,29 +227,33 @@ class _GameOptionCardState extends State<_GameOptionCard>
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            gradient: widget.gradient,
-            borderRadius: BorderRadius.circular(24),
+            color: AppColors.surfaceContainerLowest,
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(
+              color: AppColors.outlineVariant,
+              width: 1.5,
+            ),
             boxShadow: [
               BoxShadow(
-                color: widget.gradient.colors.first.withValues(alpha: 0.35),
-                blurRadius: 14,
-                offset: const Offset(0, 8),
+                color: AppColors.primary.withValues(alpha: 0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
               ),
             ],
           ),
           child: Row(
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(18),
+                  color: widget.iconBg,
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: Icon(
                   widget.icon,
-                  color: Colors.white,
-                  size: 32,
+                  color: widget.iconColor,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 16),
@@ -268,26 +264,27 @@ class _GameOptionCardState extends State<_GameOptionCard>
                     Text(
                       widget.title,
                       style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
+                        color: AppColors.onSurface,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       widget.description,
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 13,
+                      style: const TextStyle(
+                        color: AppColors.onSurfaceVariant,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.white.withValues(alpha: 0.7),
-                size: 20,
+                color: AppColors.outline,
+                size: 14,
               ),
             ],
           ),

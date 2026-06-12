@@ -51,15 +51,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'CH', // Chim
   ];
 
+  // Đổi thành một danh sách màu xanh dịu phối hợp tinh tế
   final List<Color> _avatarColors = [
-    AppColors.primaryPink,
-    AppColors.primaryOrange,
-    AppColors.primaryYellow,
     AppColors.primaryGreen,
-    AppColors.primaryTeal,
-    AppColors.primaryBlue,
-    AppColors.primaryPurple,
-    AppColors.primaryRed,
+    const Color(0xFF2E8B57),
+    const Color(0xFF156E3D),
+    const Color(0xFF3CB371),
+    AppColors.primaryGreen,
+    const Color(0xFF2E8B57),
+    const Color(0xFF156E3D),
+    const Color(0xFF3CB371),
   ];
 
   @override
@@ -87,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Hay nhap ten cua con nhe!'),
-          backgroundColor: AppColors.primaryPink,
+          backgroundColor: AppColors.primaryGreen,
           behavior: SnackBarBehavior.floating,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -100,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Hay chon do tuoi nhe!'),
-          backgroundColor: AppColors.primaryPink,
+          backgroundColor: AppColors.primaryGreen,
           behavior: SnackBarBehavior.floating,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -140,13 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildOnboardingPages() {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFF8F9FF), Color(0xFFE8ECFF)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: AppColors.backgroundLight,
         child: SafeArea(
           child: Column(
             children: [
@@ -159,11 +154,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       _showProfileSetup = true;
                     });
                   },
-                  child: Text(
+                  child: const Text(
                     'Bo qua',
                     style: TextStyle(
                       color: AppColors.textSecondary,
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -198,13 +193,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: _currentPage == index ? 32 : 10,
-                    height: 10,
+                    width: _currentPage == index ? 24 : 8,
+                    height: 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? AppColors.primaryPurple
-                          : AppColors.primaryPurple.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(5),
+                          ? AppColors.primaryGreen
+                          : AppColors.primaryGreen.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                   );
                 }),
@@ -217,25 +212,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 52,
                   child: ElevatedButton(
                     onPressed: _nextPage,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryPurple,
+                      backgroundColor: AppColors.primaryGreen,
                       foregroundColor: Colors.white,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 8,
-                      shadowColor: AppColors.primaryPurple.withValues(alpha: 0.4),
                     ),
                     child: Text(
                       _currentPage == _pages.length - 1
                           ? 'Bat dau nao!'
                           : 'Tiep theo',
                       style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -251,12 +245,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildPage(String title, String desc, String emoji, int index) {
-    final List<LinearGradient> gradients = [
-      AppColors.skyGradient,
-      AppColors.warmGradient,
-      AppColors.forestGradient,
-    ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Column(
@@ -264,55 +252,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           // Illustration container
           Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              gradient: gradients[index],
+            width: 180,
+            height: 180,
+            decoration: const BoxDecoration(
+              color: AppColors.softGreenTint,
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: gradients[index].colors.first.withValues(alpha: 0.3),
-                  blurRadius: 30,
-                  offset: const Offset(0, 10),
-                ),
-              ],
             ),
             child: Center(
               child: Text(
                 emoji,
                 style: const TextStyle(
-                  fontSize: 64,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
+                  fontSize: 56,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primaryGreen,
                 ),
               ),
             ),
           ),
 
-          const SizedBox(height: 48),
+          const SizedBox(height: 40),
 
           // Title
           Text(
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
-              height: 1.3,
+              height: 1.25,
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           // Description
           Text(
             desc,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
+            style: const TextStyle(
+              fontSize: 14,
               color: AppColors.textSecondary,
-              height: 1.5,
+              height: 1.4,
             ),
           ),
         ],
@@ -323,59 +304,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildProfileSetup() {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFF8F9FF), Color(0xFFE8ECFF)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: AppColors.backgroundLight,
         child: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Title
                 const Center(
                   child: Text(
                     'Thiet lap ho so',
                     style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
                       color: AppColors.textPrimary,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 8),
-                Center(
+                const SizedBox(height: 6),
+                const Center(
                   child: Text(
                     'Hay cho chung toi biet ve con nhe!',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 13,
                       color: AppColors.textSecondary,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 36),
+                const SizedBox(height: 28),
 
                 // Avatar selection
                 const Text(
                   'Chon hinh dai dien:',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
+                  spacing: 10,
+                  runSpacing: 10,
                   children: List.generate(_avatarOptions.length, (index) {
                     bool isSelected = _selectedAvatar == _avatarOptions[index];
                     return GestureDetector(
@@ -386,35 +361,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        width: 64,
-                        height: 64,
+                        width: 56,
+                        height: 56,
                         decoration: BoxDecoration(
                           color: isSelected
                               ? _avatarColors[index]
-                              : _avatarColors[index].withValues(alpha: 0.15),
+                              : _avatarColors[index].withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: isSelected
                                 ? _avatarColors[index]
                                 : Colors.transparent,
-                            width: 3,
+                            width: 2.5,
                           ),
-                          boxShadow: isSelected
-                              ? [
-                                  BoxShadow(
-                                    color: _avatarColors[index]
-                                        .withValues(alpha: 0.4),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ]
-                              : [],
                         ),
                         child: Center(
                           child: Text(
                             _avatarOptions[index],
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color:
                                   isSelected ? Colors.white : _avatarColors[index],
@@ -426,13 +391,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   }),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 28),
 
                 // Name input
                 const Text(
                   'Ten cua con:',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -441,52 +406,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 TextField(
                   controller: _nameController,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Nhap ten con...',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: AppColors.textHint,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: AppColors.primaryPurple.withValues(alpha: 0.2),
+                        color: AppColors.primaryGreen.withValues(alpha: 0.15),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(
-                        color: AppColors.primaryPurple,
-                        width: 2,
+                        color: AppColors.primaryGreen,
+                        width: 1.5,
                       ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
+                      horizontal: 16,
+                      vertical: 14,
                     ),
                     prefixIcon: const Icon(
                       Icons.person_outline_rounded,
-                      color: AppColors.primaryPurple,
+                      color: AppColors.primaryGreen,
+                      size: 20,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 28),
 
                 // Age group selection
                 const Text(
                   'Con bao nhieu tuoi?',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -494,28 +460,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(height: 12),
                 ..._buildAgeGroupCards(),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 32),
 
                 // Continue button
                 SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 52,
                   child: ElevatedButton(
                     onPressed: _completeSetup,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryPurple,
+                      backgroundColor: AppColors.primaryGreen,
                       foregroundColor: Colors.white,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 8,
-                      shadowColor: AppColors.primaryPurple.withValues(alpha: 0.4),
                     ),
                     child: const Text(
                       'Bat dau hoc nao!',
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -535,19 +500,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       {
         'label': '3-5 tuoi',
         'desc': 'Mam non',
-        'color': AppColors.ageGroup3to5,
+        'color': AppColors.primaryGreen,
         'icon': Icons.child_care_rounded,
       },
       {
         'label': '6-7 tuoi',
         'desc': 'Lop 1-2',
-        'color': AppColors.ageGroup6to7,
+        'color': AppColors.primaryGreen,
         'icon': Icons.school_rounded,
       },
       {
         'label': '8-10 tuoi',
         'desc': 'Lop 3-5',
-        'color': AppColors.ageGroup8to10,
+        'color': AppColors.primaryGreen,
         'icon': Icons.auto_stories_rounded,
       },
     ];
@@ -557,7 +522,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       Color cardColor = ageGroups[index]['color'] as Color;
 
       return Padding(
-        padding: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.only(bottom: 10),
         child: GestureDetector(
           onTap: () {
             setState(() {
@@ -566,55 +531,47 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: isSelected ? cardColor : Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected ? cardColor : cardColor.withValues(alpha: 0.3),
-                width: 2,
+                color: isSelected ? cardColor : cardColor.withValues(alpha: 0.15),
+                width: 1.5,
               ),
-              boxShadow: isSelected
-                  ? [
-                      BoxShadow(
-                        color: cardColor.withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ]
-                  : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.01),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               children: [
                 Container(
-                  width: 50,
-                  height: 50,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? Colors.white.withValues(alpha: 0.25)
-                        : cardColor.withValues(alpha: 0.15),
+                        ? Colors.white.withValues(alpha: 0.2)
+                        : AppColors.softGreenTint,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     ageGroups[index]['icon'] as IconData,
                     color: isSelected ? Colors.white : cardColor,
-                    size: 28,
+                    size: 24,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 14),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       ageGroups[index]['label'] as String,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: isSelected ? Colors.white : AppColors.textPrimary,
                       ),
@@ -623,7 +580,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Text(
                       ageGroups[index]['desc'] as String,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: isSelected
                             ? Colors.white.withValues(alpha: 0.8)
                             : AppColors.textSecondary,
@@ -634,16 +591,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const Spacer(),
                 if (isSelected)
                   Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
+                    width: 24,
+                    height: 24,
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.check_rounded,
                       color: cardColor,
-                      size: 20,
+                      size: 16,
                     ),
                   ),
               ],
