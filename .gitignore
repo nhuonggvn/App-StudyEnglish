@@ -41,7 +41,6 @@ migrate_working_dir/
 *.ap_
 *.aab
 
-
 # iOS - Cấu hình cục bộ 
 ios/Flutter/Generated.xcconfig
 ios/Flutter/flutter_export_environment.sh
