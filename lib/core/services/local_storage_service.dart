@@ -14,6 +14,7 @@ class LocalStorageService {
   static const String scoresBox = 'scores_box';
   static const String leaderboardBox = 'leaderboard_box';
   static const String vocabularyBox = 'vocabulary_box';
+  static const String customTopicsBox = 'custom_topics_box';
 
   Future<void> init() async {
     if (_isInitialized) return;
@@ -25,6 +26,7 @@ class LocalStorageService {
       await Hive.openBox(scoresBox);
       await Hive.openBox(leaderboardBox);
       await Hive.openBox(vocabularyBox);
+      await Hive.openBox(customTopicsBox);
       _isInitialized = true;
     } catch (e) {
       _isInitialized = false;
@@ -282,6 +284,32 @@ class LocalStorageService {
       return prefs.get(key) ?? defaultValue;
     } catch (e) {
       return defaultValue;
+    }
+  }
+
+  // Custom Topics Storage
+  Future<void> saveCustomTopic(Map<String, dynamic> topicJson) async {
+    try {
+      final box = Hive.box(customTopicsBox);
+      await box.put(topicJson['id'], topicJson);
+    } catch (e) {
+      // Custom topic save error
+    }
+  }
+
+  List<Map<String, dynamic>> getCustomTopics() {
+    try {
+      final box = Hive.box(customTopicsBox);
+      List<Map<String, dynamic>> topics = [];
+      for (var key in box.keys) {
+        final value = box.get(key);
+        if (value is Map) {
+          topics.add(Map<String, dynamic>.from(value));
+        }
+      }
+      return topics;
+    } catch (e) {
+      return [];
     }
   }
 }

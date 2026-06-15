@@ -12,6 +12,26 @@ class VocabularyWord {
     required this.topic,
     required this.ageGroup,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'english': english,
+      'vietnamese': vietnamese,
+      'emoji': emoji,
+      'topic': topic,
+      'ageGroup': ageGroup,
+    };
+  }
+
+  factory VocabularyWord.fromJson(Map<String, dynamic> json) {
+    return VocabularyWord(
+      english: json['english'] as String? ?? '',
+      vietnamese: json['vietnamese'] as String? ?? '',
+      emoji: json['emoji'] as String? ?? '⭐',
+      topic: json['topic'] as String? ?? '',
+      ageGroup: (json['ageGroup'] as num?)?.toInt() ?? 0,
+    );
+  }
 }
 
 class TopicData {
@@ -32,6 +52,31 @@ class TopicData {
     required this.words,
     this.difficulty = 1,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'emoji': emoji,
+      'description': description,
+      'ageGroup': ageGroup,
+      'words': words.map((w) => w.toJson()).toList(),
+      'difficulty': difficulty,
+    };
+  }
+
+  factory TopicData.fromJson(Map<String, dynamic> json) {
+    var wordsList = json['words'] as List? ?? [];
+    return TopicData(
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      emoji: json['emoji'] as String? ?? '📚',
+      description: json['description'] as String? ?? '',
+      ageGroup: (json['ageGroup'] as num?)?.toInt() ?? 0,
+      words: wordsList.map((w) => VocabularyWord.fromJson(Map<String, dynamic>.from(w as Map))).toList(),
+      difficulty: (json['difficulty'] as num?)?.toInt() ?? 1,
+    );
+  }
 }
 
 class GameResult {

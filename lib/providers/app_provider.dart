@@ -16,6 +16,7 @@ class AppProvider extends ChangeNotifier {
 
   // Navigation
   int _currentTabIndex = 0;
+  List<TopicData> _customTopics = [];
 
   // Scores
   int _totalScore = 0;
@@ -37,19 +38,22 @@ class AppProvider extends ChangeNotifier {
   String get ageGroupLabel {
     switch (_ageGroup) {
       case 0:
-        return '3-5 tuoi';
+        return '3-5 tuổi';
       case 1:
-        return '6-7 tuoi';
+        return '6-7 tuổi';
       case 2:
-        return '8-10 tuoi';
+        return '8-10 tuổi';
       default:
-        return '3-5 tuoi';
+        return '3-5 tuổi';
     }
   }
 
   // Topics for current age group
-  List<TopicData> get currentTopics =>
-      VocabularyData.getTopicsForAgeGroup(_ageGroup);
+  List<TopicData> get currentTopics {
+    final defaultTopics = VocabularyData.getTopicsForAgeGroup(_ageGroup);
+    final customForAge = _customTopics.where((t) => t.ageGroup == _ageGroup).toList();
+    return [...defaultTopics, ...customForAge];
+  }
 
   // Learning path items
   List<LearningPathItem> get learningPath {
@@ -149,13 +153,17 @@ class AppProvider extends ChangeNotifier {
   void _loadUserData() {
     try {
       final profile = _storageService.getUserProfile();
-      _userName = profile['name'] ?? 'Ban nho';
+      _userName = profile['name'] ?? 'Bạn nhỏ';
       _ageGroup = profile['age_group'] ?? 0;
       _avatarEmoji = profile['avatar_emoji'] ?? '';
       _onboardingComplete = profile['onboarding_complete'] ?? false;
       _totalScore = _storageService.getTotalScore();
       _streakDays = _storageService.getStreakDays();
       _learnedWordsCount = _storageService.getLearnedWordsCount();
+      
+      final localCustom = _storageService.getCustomTopics();
+      _customTopics = localCustom.map((j) => TopicData.fromJson(j)).toList();
+      
       notifyListeners();
     } catch (e) {
       // Load error - use defaults
@@ -220,5 +228,11 @@ class AppProvider extends ChangeNotifier {
 
   Future<void> speakSlow(String text) async {
     await _ttsService.speakSlow(text);
+  }
+
+  Future<void> addCustomTopic(TopicData topic) async {
+    _customTopics.add(topic);
+    await _storageService.saveCustomTopic(topic.toJson());
+    notifyListeners();
   }
 }
