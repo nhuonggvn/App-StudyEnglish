@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Learn &amp; Play - My Achievement Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fef7ff",
+                    "primary-fixed": "#e9ddff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-variant": "#e7e0ed",
+                    "tertiary": "#825100",
+                    "inverse-surface": "#322f39",
+                    "surface-container-low": "#f8f1fe",
+                    "surface-container-high": "#ede5f3",
+                    "secondary": "#006c49",
+                    "inverse-primary": "#d0bcff",
+                    "secondary-container": "#6cf8bb",
+                    "on-background": "#1d1a23",
+                    "outline-variant": "#cbc3d7",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-tint": "#6d3bd7",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#ded7e4",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "outline": "#7b7486",
+                    "secondary-fixed": "#6ffbbe",
+                    "primary-fixed-dim": "#d0bcff",
+                    "primary-container": "#8455ef",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-primary-container": "#fffbff",
+                    "on-secondary-container": "#00714d",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#5516be",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#fef7ff",
+                    "on-error": "#ffffff",
+                    "primary": "#6b38d4",
+                    "surface-container-highest": "#e7e0ed",
+                    "on-secondary-fixed-variant": "#005236",
+                    "background": "#fef7ff",
+                    "on-surface": "#1d1a23",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#f3ebf8",
+                    "on-primary-fixed": "#23005c",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#a36700",
+                    "inverse-on-surface": "#f5eefb",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#494454"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "card-padding": "32px",
+                    "unit": "8px",
+                    "touch-target-min": "48px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Nunito Sans"],
+                    "label-caps": ["Nunito Sans"],
+                    "display-lg-mobile": ["Nunito Sans"],
+                    "body-lg": ["Nunito Sans"],
+                    "headline-md": ["Nunito Sans"],
+                    "body-md": ["Nunito Sans"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "800"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .achievement-card-inner {
+            box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .achievement-card-inner:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 0 transparent;
+        }
+        .bounce-slow {
+            animation: bounce-slow 3s infinite;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-15px); }
+            100% { transform: translatey(0px); }
+        }
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(233, 221, 255, 0.6);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface selection:bg-primary-fixed">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-on-background shadow-[0_8px_20px_rgba(107,56,212,0.12)] flex justify-between items-center px-container-margin h-[64px]">
+<div class="flex items-center gap-3 transition-transform duration-200 active:scale-95 cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden border-2 border-primary">
+<img alt="Mascot" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQsDR3CQuo8c7wBoEQoQ9zQlLp5wO7FUI-vj_w65248zcpHXuwiX3tN74Hl4zKYHDvMfdAvYSLQK_-vv0ICfSIxB_IwXhwe6WdiEmI6tTr5JjYWksbW6okjAloA5jR_BJHHMHcqUCiH9Fb2ExIQRGnkgfRBwmoY08CODcHkrOjE72UmThdpuaQfp5mQep6oFfottYa9-i2-hdqON2f5e7MSFWOY9IRCBz8YEn1gT2lg0EuFSNWK96SWRvBueaOp_nrWnkdMmaDB4Y"/>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary dark:text-primary-fixed">Learn &amp; Play</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-primary-container/10 transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[28px]" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="min-h-screen pb-32">
+<!-- Hero Section: The Achievement Room Environment -->
+<section class="relative h-[397px] w-full overflow-hidden flex flex-col items-center justify-end px-container-margin pb-10 bg-gradient-to-b from-primary-fixed to-surface">
+<!-- Decorative Elements -->
+<div class="absolute top-10 left-10 opacity-20 float-animation" style="animation-delay: 0s;">
+<span class="material-symbols-outlined text-[80px] text-primary" data-icon="star">star</span>
+</div>
+<div class="absolute top-20 right-20 opacity-20 float-animation" style="animation-delay: 1.5s;">
+<span class="material-symbols-outlined text-[60px] text-secondary" data-icon="emoji_events">emoji_events</span>
+</div>
+<div class="absolute top-40 left-1/4 opacity-10 float-animation" style="animation-delay: 0.5s;">
+<span class="material-symbols-outlined text-[100px] text-tertiary" data-icon="cloud">cloud</span>
+</div>
+<!-- Pet Companion Area -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="relative bounce-slow group cursor-pointer">
+<div class="absolute -top-6 -right-6 bg-secondary text-on-secondary px-3 py-1 rounded-full text-[12px] font-bold shadow-lg animate-pulse">Level 12</div>
+<img alt="Your Companion" class="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl transition-transform group-hover:scale-110" data-alt="A cute, friendly cartoon adventurer pet mascot with a cheerful expression, wearing small green goggles, standing in a brightly lit digital playroom with soft purple walls. The art style is flat, high-quality vector illustration with soft gradients and friendly rounded shapes, fitting a modern educational app for children. The lighting is warm and inviting, creating a sense of safety and companionship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEMId2qnUckNrcjdCEY-Z4uTt1Tsk82J0J8c8LD6x8u3rIRlM2l7f8fRfkkcQey7ntelZ_y7kHhk4AOzaG1fs4OFjS_l8km4GnUb-IPa-q6_Rzimq8wzDBCJJcMssgiXc9ituiJFFwqtpSBLEBjVLCRidWbZDeZCL0S0sEU0Agjbc1cSgHHcBQTzxvwQcvsdKKAdvX5P85OIYeZyq3rNZJcx03vpeeboHZUgco08hb9bNyQxpHDyxTKwcuORxVSRZMdr5QB8Ui0fw"/>
+</div>
+<div class="mt-4 text-center">
+<h2 class="font-headline-md text-headline-md-mobile text-primary">Hi! I'm Leo!</h2>
+<p class="text-on-surface-variant font-body-md">You've unlocked 14 stickers today!</p>
+</div>
+</div>
+</section>
+<!-- Achievements Section -->
+<section class="px-container-margin -mt-8 relative z-20">
+<div class="bg-white rounded-[32px] p-card-padding shadow-[0_8px_20px_rgba(107,56,212,0.08)] border border-surface-variant">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="auto_stories">auto_stories</span>
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Your Collection</h3>
+</div>
+<div class="bg-surface-container-high px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]" data-icon="database">database</span>
+<span class="font-label-caps text-label-caps text-on-surface">240 Tokens</span>
+</div>
+</div>
+<!-- Achievements Bento Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-gutter">
+<!-- Achievement Item: Sticker 1 -->
+<div class="achievement-card-inner bg-primary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-primary-fixed aspect-square hover:bg-primary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-primary" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Space Explorer</span>
+</div>
+<!-- Achievement Item: Sticker 2 -->
+<div class="achievement-card-inner bg-secondary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-secondary-fixed aspect-square hover:bg-secondary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-secondary" data-icon="science">science</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Little Chemist</span>
+</div>
+<!-- Achievement Item: Sticker 3 (Locked) -->
+<div class="achievement-card-inner bg-surface-variant/50 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-outline aspect-square opacity-60 grayscale">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-outline" data-icon="lock">lock</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface-variant text-center">Coming Soon</span>
+</div>
+<!-- Achievement Item: Sticker 4 -->
+<div class="achievement-card-inner bg-tertiary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-tertiary-fixed aspect-square hover:bg-tertiary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-tertiary" data-icon="brush">brush</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Color Master</span>
+</div>
+<!-- Achievement Item: Sticker 5 -->
+<div class="achievement-card-inner bg-primary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-primary-fixed aspect-square hover:bg-primary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-primary" data-icon="music_note">music_note</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Melody Maker</span>
+</div>
+<!-- Achievement Item: Sticker 6 -->
+<div class="achievement-card-inner bg-secondary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-secondary-fixed aspect-square hover:bg-secondary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-secondary" data-icon="park">park</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Nature Guide</span>
+</div>
+<!-- Achievement Item: Badge 1 (Special Row) -->
+<div class="col-span-2 md:col-span-2 achievement-card-inner bg-primary-container text-on-primary-container rounded-[24px] p-6 flex items-center gap-4 border-b-4 border-primary">
+<div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[56px] text-white" data-icon="military_tech">military_tech</span>
+</div>
+<div>
+<h4 class="font-headline-md text-[18px]">7-Day Streak!</h4>
+<p class="font-body-md text-[14px] opacity-90">You are on fire, superstar!</p>
+</div>
+</div>
+<!-- Achievement Item: Sticker 7 -->
+<div class="achievement-card-inner bg-tertiary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-tertiary-fixed aspect-square hover:bg-tertiary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-tertiary" data-icon="pets">pets</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Animal Friend</span>
+</div>
+<!-- Achievement Item: Sticker 8 -->
+<div class="achievement-card-inner bg-primary-fixed/30 rounded-[24px] p-4 flex flex-col items-center justify-center border-b-4 border-primary-fixed aspect-square hover:bg-primary-fixed/50 cursor-pointer">
+<div class="w-16 h-16 mb-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-primary" data-icon="psychology">psychology</span>
+</div>
+<span class="font-label-caps text-[12px] text-on-surface text-center">Problem Solver</span>
+</div>
+</div>
+</div>
+<!-- Customization Banner -->
+<div class="mt-8 bg-surface-container-low rounded-[32px] p-6 flex flex-col md:flex-row items-center justify-between border-2 border-dashed border-outline-variant gap-4">
+<div class="flex items-center gap-4 text-center md:text-left">
+<div class="w-14 h-14 bg-secondary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-[32px]" data-icon="checkroom">checkroom</span>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface">Decorate Room</h4>
+<p class="text-on-surface-variant font-body-md">Use your tokens to buy new hats for Leo!</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-headline-md text-[16px] shadow-lg transition-transform active:scale-95 border-b-4 border-on-primary-fixed-variant">
+                    Open Shop
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-[80px] px-4 pb-2 bg-surface dark:bg-inverse-surface border-t-0 shadow-[0_-8px_20px_rgba(107,56,212,0.08)] rounded-t-[32px]">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-caps text-label-caps">Path</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-caps text-label-caps">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-label-caps text-label-caps">Games</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 border-b-[4px] border-on-secondary-container transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="font-label-caps text-label-caps">Awards</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="supervisor_account">supervisor_account</span>
+<span class="font-label-caps text-label-caps">Parents</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) - For Quick Action (Suppressed on this specific screen as per relevance check, but added a "Collect All" button if relevant) -->
+<!-- Not strictly required for Awards screen but could be used for a "Redeem" action -->
+<script>
+        // Micro-interaction for clicking achievements
+        document.querySelectorAll('.achievement-card-inner').forEach(card => {
+            card.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined').textContent;
+                if(icon !== 'lock') {
+                    // Create confetti effect or sound trigger placeholder
+                    console.log('Interacting with achievement:', icon);
+                    this.classList.add('scale-110', 'glow-effect');
+                    setTimeout(() => {
+                        this.classList.remove('scale-110', 'glow-effect');
+                    }, 300);
+                }
+            });
+        });
+
+        // Pet Companion interaction
+        const pet = document.querySelector('.bounce-slow');
+        pet.addEventListener('click', () => {
+            const speechBubble = document.createElement('div');
+            speechBubble.className = 'absolute -top-12 left-1/2 -translate-x-1/2 bg-white px-4 py-2 rounded-2xl shadow-xl text-primary font-bold text-sm z-50 whitespace-nowrap animate-bounce';
+            speechBubble.textContent = "You're doing great! ❤️";
+            pet.parentElement.appendChild(speechBubble);
+            
+            setTimeout(() => {
+                speechBubble.remove();
+            }, 2000);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Parent Dashboard - Learn &amp; Play</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-gradient {
+            background: linear-gradient(180deg, rgba(109, 59, 215, 0.1) 0%, rgba(109, 59, 215, 0) 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #fef7ff;
+        }
+        /* Custom progress bar sizing */
+        .progress-thick {
+            height: 12px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fef7ff",
+                        "primary-fixed": "#e9ddff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-variant": "#e7e0ed",
+                        "tertiary": "#825100",
+                        "inverse-surface": "#322f39",
+                        "surface-container-low": "#f8f1fe",
+                        "surface-container-high": "#ede5f3",
+                        "secondary": "#006c49",
+                        "inverse-primary": "#d0bcff",
+                        "secondary-container": "#6cf8bb",
+                        "on-background": "#1d1a23",
+                        "outline-variant": "#cbc3d7",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-tint": "#6d3bd7",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#ded7e4",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "outline": "#7b7486",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-fixed-dim": "#d0bcff",
+                        "primary-container": "#8455ef",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-primary-container": "#fffbff",
+                        "on-secondary-container": "#00714d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#5516be",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fef7ff",
+                        "on-error": "#ffffff",
+                        "primary": "#6b38d4",
+                        "surface-container-highest": "#e7e0ed",
+                        "on-secondary-fixed-variant": "#005236",
+                        "background": "#fef7ff",
+                        "on-surface": "#1d1a23",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f3ebf8",
+                        "on-primary-fixed": "#23005c",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#a36700",
+                        "inverse-on-surface": "#f5eefb",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#494454"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "card-padding": "32px",
+                        "unit": "8px",
+                        "touch-target-min": "48px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Nunito Sans"],
+                        "label-caps": ["Nunito Sans"],
+                        "display-lg-mobile": ["Nunito Sans"],
+                        "body-lg": ["Nunito Sans"],
+                        "headline-md": ["Nunito Sans"],
+                        "body-md": ["Nunito Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "800"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface mb-24 md:mb-0">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 flex justify-between items-center px-container-margin h-[64px] bg-surface dark:bg-on-background shadow-[0_8px_20px_rgba(107,56,212,0.12)]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="Child Profile Mascot" class="w-full h-full object-cover" data-alt="A friendly, stylized 3D avatar mascot of a cheerful child wearing a purple learning cap, rendered in a soft, clay-like animation style. The lighting is warm and bright, emphasizing the clean, friendly minimalism of the educational brand. The color palette features vibrant purples and soft creams to match the premium UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeplWVZqQlguBCYkLpUp226EhXXSmvuwYaAVnKyK_onidHR2B8gbBkllRpXjIBYFOkvtVzR5bvS_Y6-1YGuGbzBQEePYZvkA8-8ULU63YYdLwdddMx_DOfFKCuMIkYVc97lgTTmuEmWmRtHubo8PZ_jz_wNV_r2psRXfHMdzCyehw1Gn2s6Mr3g6cWQcdR4J0CZiI6TCnB_Z6qBn12oFvsZQ6gFqV0Gvd8o1HfB9V4vSidJWKdC9NfNhEFnRMI9fmkT2CdjwgAvlw"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Learn &amp; Play</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary-container/10 transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</header>
+<main class="max-w-5xl mx-auto px-container-margin py-unit mt-6 space-y-6">
+<!-- Welcome Hero -->
+<section class="relative overflow-hidden rounded-[32px] bg-primary text-on-primary p-card-padding shadow-[0_8px_20px_rgba(107,56,212,0.12)]">
+<div class="relative z-10">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-2">Hello, Parent!</h2>
+<p class="font-body-lg text-body-lg text-primary-fixed max-w-lg">Alex has completed 85% of their daily learning goals. Keep up the great work!</p>
+</div>
+<div class="absolute right-[-40px] bottom-[-20px] opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[180px]">auto_stories</span>
+</div>
+</section>
+<!-- Bento Grid Insights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Learning Progress Card -->
+<div class="md:col-span-2 bg-surface-container-lowest rounded-[32px] p-card-padding shadow-[0_8px_20px_rgba(107,56,212,0.06)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Learning Progress</h3>
+<span class="px-4 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">trending_up</span> On Track
+                        </span>
+</div>
+<!-- Custom Chart Mockup -->
+<div class="h-48 w-full flex items-end gap-2 px-2 border-b-2 border-surface-variant mb-2">
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[40%] transition-all hover:bg-primary" title="Mon"></div>
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[65%] transition-all hover:bg-primary" title="Tue"></div>
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[50%] transition-all hover:bg-primary" title="Wed"></div>
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[85%] transition-all hover:bg-primary" title="Thu"></div>
+<div class="flex-1 bg-primary-container rounded-t-lg h-[95%] transition-all hover:bg-primary" title="Fri"></div>
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[30%] transition-all hover:bg-primary" title="Sat"></div>
+<div class="flex-1 bg-primary-fixed rounded-t-lg h-[20%] transition-all hover:bg-primary" title="Sun"></div>
+</div>
+<div class="flex justify-between font-label-caps text-label-caps text-outline px-2">
+<span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+</div>
+</div>
+</div>
+<!-- Time Spent Gauge -->
+<div class="bg-surface-container-lowest rounded-[32px] p-card-padding shadow-[0_8px_20_rgba(107,56,212,0.06)] flex flex-col items-center justify-center text-center">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Today's Time</h3>
+<div class="relative w-40 h-40 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-variant" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary rounded-full" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-headline-md text-primary">45</span>
+<span class="font-label-caps text-label-caps text-outline">MINUTES</span>
+</div>
+</div>
+<p class="mt-6 font-body-md text-body-md text-on-surface-variant">Goal: 60 mins</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Vocabulary Mastered -->
+<div class="bg-surface-container-lowest rounded-[32px] p-card-padding shadow-[0_8px_20px_rgba(107,56,212,0.06)]">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Vocabulary</h3>
+<button class="text-primary font-label-caps text-label-caps flex items-center gap-1">VIEW LIST <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant">spellcheck</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="font-body-md text-on-surface">New Words Mastered</span>
+<span class="font-bold text-on-surface">124</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full progress-thick overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-4">
+<div class="bg-surface p-3 rounded-2xl text-center border border-surface-variant">
+<p class="font-label-caps text-[10px] text-outline mb-1 uppercase">Noun</p>
+<p class="font-bold text-on-surface text-sm">Astronaut</p>
+</div>
+<div class="bg-surface p-3 rounded-2xl text-center border border-surface-variant">
+<p class="font-label-caps text-[10px] text-outline mb-1 uppercase">Verb</p>
+<p class="font-bold text-on-surface text-sm">Explore</p>
+</div>
+<div class="bg-surface p-3 rounded-2xl text-center border border-surface-variant">
+<p class="font-label-caps text-[10px] text-outline mb-1 uppercase">Adj</p>
+<p class="font-bold text-on-surface text-sm">Vibrant</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Controls -->
+<div class="bg-surface-container-highest rounded-[32px] p-card-padding shadow-[0_8px_20px_rgba(107,56,212,0.06)]">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Quick Controls</h3>
+<div class="space-y-4">
+<div class="bg-surface p-4 rounded-2xl flex items-center justify-between border border-white/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">child_care</span>
+<div>
+<p class="font-bold text-on-surface text-sm">Target Age</p>
+<p class="text-xs text-outline">Current: 6 Years Old</p>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-xl font-bold text-xs shadow-[0_4px_0px_#5516be] active:translate-y-[2px] active:shadow-none transition-all">ADJUST</button>
+</div>
+<div class="bg-surface p-4 rounded-2xl flex items-center justify-between border border-white/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">timer</span>
+<div>
+<p class="font-bold text-on-surface text-sm">Daily Limit</p>
+<p class="text-xs text-outline">60 mins / day</p>
+</div>
+</div>
+<input checked="" class="w-10 h-6 bg-surface-variant rounded-full appearance-none checked:bg-secondary relative transition-colors cursor-pointer before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-1 before:left-1 checked:before:left-5 before:transition-all" type="checkbox"/>
+</div>
+<div class="bg-surface p-4 rounded-2xl flex items-center justify-between border border-white/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">lock</span>
+<div>
+<p class="font-bold text-on-surface text-sm">Bedtime Lock</p>
+<p class="text-xs text-outline">Starts at 8:30 PM</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table -->
+<section class="bg-surface-container-low rounded-[32px] p-card-padding overflow-hidden">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Recent Activity</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-white rounded-2xl">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Galaxy Explorer Quiz</p>
+<p class="text-xs text-outline">Completed • 2:15 PM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-secondary">95%</p>
+<p class="text-[10px] text-outline font-label-caps uppercase">Excellent</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-white rounded-2xl">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">The Friendly Dragon Story</p>
+<p class="text-xs text-outline">Read aloud • 11:45 AM</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-surface">15m</p>
+<p class="text-[10px] text-outline font-label-caps uppercase">Duration</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-[80px] px-4 pb-2 bg-surface dark:bg-inverse-surface shadow-[0_-8px_20px_rgba(107,56,212,0.08)] rounded-t-[32px] md:hidden">
+<a class="flex flex-col items-center justify-center text-outline p-2 transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-[10px] mt-1">Path</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label-caps text-[10px] mt-1">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="font-label-caps text-[10px] mt-1">Games</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-caps text-[10px] mt-1">Awards</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 border-b-[4px] border-on-secondary-container transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">supervisor_account</span>
+<span class="font-label-caps text-[10px] mt-1">Parents</span>
+</a>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                // Haptic feedback simulation or additional logic
+                console.log('Setting updated');
+            });
+        });
+        
+        // Add subtle hover animations to bars
+        const bars = document.querySelectorAll('.flex-1.bg-primary-fixed');
+        bars.forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.classList.add('scale-x-105');
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.classList.remove('scale-x-105');
+            });
+        });
+    </script>
+</body></html>

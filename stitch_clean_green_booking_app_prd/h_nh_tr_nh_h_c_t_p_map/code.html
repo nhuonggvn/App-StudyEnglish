@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Learn &amp; Play - Adventure Map</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .path-line {
+            background-image: radial-gradient(circle, #cbc3d7 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fef7ff",
+                        "primary-fixed": "#e9ddff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-variant": "#e7e0ed",
+                        "tertiary": "#825100",
+                        "inverse-surface": "#322f39",
+                        "surface-container-low": "#f8f1fe",
+                        "surface-container-high": "#ede5f3",
+                        "secondary": "#006c49",
+                        "inverse-primary": "#d0bcff",
+                        "secondary-container": "#6cf8bb",
+                        "on-background": "#1d1a23",
+                        "outline-variant": "#cbc3d7",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-tint": "#6d3bd7",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#ded7e4",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "outline": "#7b7486",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-fixed-dim": "#d0bcff",
+                        "primary-container": "#8455ef",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-primary-container": "#fffbff",
+                        "on-secondary-container": "#00714d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#5516be",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fef7ff",
+                        "on-error": "#ffffff",
+                        "primary": "#6b38d4",
+                        "surface-container-highest": "#e7e0ed",
+                        "on-secondary-fixed-variant": "#005236",
+                        "background": "#fef7ff",
+                        "on-surface": "#1d1a23",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f3ebf8",
+                        "on-primary-fixed": "#23005c",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#a36700",
+                        "inverse-on-surface": "#f5eefb",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#494454"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "24px",
+                        "card-padding": "32px",
+                        "unit": "8px",
+                        "touch-target-min": "48px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Nunito Sans"],
+                        "label-caps": ["Nunito Sans"],
+                        "display-lg-mobile": ["Nunito Sans"],
+                        "body-lg": ["Nunito Sans"],
+                        "headline-md": ["Nunito Sans"],
+                        "body-md": ["Nunito Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "800"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-surface dark:bg-on-background shadow-[0_8px_20px_rgba(107,56,212,0.12)] flex justify-between items-center px-container-margin h-[64px]">
+<div class="flex items-center gap-3 transition-transform duration-200 active:scale-95">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Child Profile Mascot" class="w-full h-full object-cover" data-alt="A cute, friendly golden retriever puppy mascot with large sparkling eyes and a soft, friendly expression. The puppy is wearing a tiny purple cap. The illustration is a clean, flat 3D style with vibrant colors and soft lighting, perfectly fitting a premium educational app for young children." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFxeDMoQM140pmhQ5dQHKZzPOuRbmr7UqVAIA6-rv6TDXvMUO4mUdT6D7xzdRL36Rw_R_9UtnMlKA8FH8TVDh9EXPY89ePgaQ_AJ-GJux429YO5dirz9DPNLeA-7QOuXDH6UG4ttAFe4AZR_jsjieZrUs8P0fD9X_sDwkd2C8Ng9yCegeHVKyYndBvUVts2Dn9lAkM65nnfXuQsJBSsV6z2rIQP6bd9cj3FtfEIr-5V4WsK3mGG-NCMV-ypXjWGWyRm3aDVlQPBpQ"/>
+</div>
+<span class="font-display-lg-mobile text-display-lg-mobile text-primary dark:text-primary-fixed">Learn &amp; Play</span>
+</div>
+<button class="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:bg-primary-container/10 rounded-full transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[28px]" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="max-w-md mx-auto px-container-margin pt-8 relative">
+<!-- Floating Mascot Guide -->
+<div class="fixed right-6 top-32 z-30 animate-float pointer-events-none md:right-[calc(50%-200px)]">
+<div class="bg-surface-container-highest p-3 rounded-[24px] shadow-lg relative mb-4">
+<p class="font-body-md text-primary text-sm font-bold">Follow the path!</p>
+<div class="absolute -bottom-2 right-6 w-4 h-4 bg-surface-container-highest rotate-45"></div>
+</div>
+<img class="w-20 h-20 drop-shadow-xl" data-alt="A high-quality 3D digital character of a friendly cartoon dog sitting upright and waving. The dog is rendered in a soft, matte plastic texture with vibrant purple and white fur. It has an encouraging, happy face. The style is consistent with high-end modern animation, set against a clean, minimal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3brAljUYZ0nnnTojWQXgr-rOzqliVpAfyR04soq_yjqQ8JUA_9tSkZhuD0vMKsUV7ebglwbZtO9YhpySvoqA2Z33pTsAhr2mVw8PLjEv28WbGIUeptGMLFXnpy4nkPlDf5v-z0loS4etrufsqL6U1E1GZlg2LuMEk0jigGIyl4kPG39tuf1Mk5rCsVdGOMxaF5bLysug_PixkLMREfIO2tC3uKWCn0CUNaElSKqTbYivFE1yva_lkSWfPkoeBwKS_gU2dety2F9I"/>
+</div>
+<!-- Vertical Learning Path -->
+<div class="flex flex-col items-center gap-16 py-8 relative">
+<!-- Path Dotted Line Background -->
+<div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-2 path-line opacity-40"></div>
+<!-- Milestone 1: Completed -->
+<div class="relative z-10 w-full group">
+<div class="flex flex-col items-center gap-4">
+<button class="w-[88px] h-[88px] bg-secondary-container rounded-full flex items-center justify-center shadow-lg border-b-[6px] border-on-secondary-container transition-all active:translate-y-1 active:border-b-0">
+<span class="material-symbols-outlined text-[48px] text-on-secondary-container" data-icon="pets" style="font-variation-settings: 'FILL' 1;">pets</span>
+</button>
+<div class="bg-white p-4 rounded-[32px] shadow-[0_8px_20px_rgba(107,56,212,0.12)] w-full text-center transition-all group-hover:scale-[1.02]">
+<h3 class="font-headline-md text-headline-md-mobile text-primary">Animals</h3>
+<div class="mt-3 w-full bg-surface-variant h-3 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-full rounded-full"></div>
+</div>
+<p class="mt-2 font-label-caps text-label-caps text-secondary">COMPLETE!</p>
+</div>
+</div>
+</div>
+<!-- Milestone 2: Active -->
+<div class="relative z-10 w-full group">
+<div class="flex flex-col items-center gap-4">
+<div class="relative">
+<!-- Pulse Effect for Active Item -->
+<div class="absolute inset-0 bg-primary/20 rounded-full animate-ping scale-110"></div>
+<button class="relative w-[104px] h-[104px] bg-primary rounded-full flex items-center justify-center shadow-[0_12px_24px_rgba(107,56,212,0.3)] border-b-[6px] border-[#4a2696] transition-all active:translate-y-1 active:border-b-0">
+<span class="material-symbols-outlined text-[56px] text-white" data-icon="palette" style="font-variation-settings: 'FILL' 1;">palette</span>
+</button>
+</div>
+<div class="bg-white p-6 rounded-[32px] shadow-[0_12px_24px_rgba(107,56,212,0.12)] w-full text-center border-2 border-primary-fixed transition-all group-hover:scale-[1.02]">
+<h3 class="font-headline-md text-headline-md-mobile text-primary">Colors</h3>
+<div class="mt-3 w-full bg-surface-variant h-3 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[45%] rounded-full"></div>
+</div>
+<p class="mt-2 font-label-caps text-label-caps text-primary">CURRENT LESSON</p>
+</div>
+</div>
+</div>
+<!-- Milestone 3: Locked -->
+<div class="relative z-10 w-full group opacity-60">
+<div class="flex flex-col items-center gap-4">
+<button class="w-[88px] h-[88px] bg-surface-variant rounded-full flex items-center justify-center border-b-[6px] border-outline-variant cursor-not-allowed">
+<span class="material-symbols-outlined text-[48px] text-outline" data-icon="pin">pin</span>
+</button>
+<div class="bg-white p-4 rounded-[32px] shadow-sm w-full text-center">
+<h3 class="font-headline-md text-headline-md-mobile text-outline">Numbers</h3>
+<div class="mt-3 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+<span class="font-label-caps text-label-caps text-outline">LOCKED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Milestone 4: Locked -->
+<div class="relative z-10 w-full group opacity-40">
+<div class="flex flex-col items-center gap-4">
+<button class="w-[88px] h-[88px] bg-surface-variant rounded-full flex items-center justify-center border-b-[6px] border-outline-variant cursor-not-allowed">
+<span class="material-symbols-outlined text-[48px] text-outline" data-icon="shapes">shapes</span>
+</button>
+<div class="bg-white p-4 rounded-[32px] shadow-sm w-full text-center">
+<h3 class="font-headline-md text-headline-md-mobile text-outline">Shapes</h3>
+</div>
+</div>
+</div>
+<!-- Path End -->
+<div class="py-12">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center border-4 border-dashed border-tertiary-container">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="flag">flag</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-[80px] px-4 pb-2 bg-surface dark:bg-inverse-surface shadow-[0_-8px_20px_rgba(107,56,212,0.08)] rounded-t-[32px]">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 border-b-[4px] border-on-secondary-container transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label-caps text-label-caps">Path</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-caps text-label-caps">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-label-caps text-label-caps">Games</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="font-label-caps text-label-caps">Awards</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-primary transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="supervisor_account">supervisor_account</span>
+<span class="font-label-caps text-label-caps">Parents</span>
+</a>
+</nav>
+<script>
+        // Simple haptic feedback simulation
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+
+        // Dynamic background sparkles for engagement
+        const createSparkle = () => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'absolute w-1 h-1 bg-secondary-container rounded-full pointer-events-none opacity-0';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(sparkle);
+            
+            sparkle.animate([
+                { opacity: 0, transform: 'scale(0)' },
+                { opacity: 0.8, transform: 'scale(1.5)' },
+                { opacity: 0, transform: 'scale(0)' }
+            ], {
+                duration: 2000,
+                easing: 'ease-in-out'
+            }).onfinish = () => sparkle.remove();
+        };
+
+        setInterval(createSparkle, 800);
+    </script>
+</body></html>
